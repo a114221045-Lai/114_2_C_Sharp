@@ -1,0 +1,185 @@
+﻿namespace Review_Q1
+{
+    public partial class Form1 : Form
+    {
+        // 枚舉型別，定義遊戲中的選擇
+        private enum Choice
+        {
+            Stone = 0,      // 石頭
+            Paper = 1,      // 布
+            Scissor = 2     // 剪刀
+        }
+
+        // 記錄遊戲結果的變數
+        private Choice computerChoice;      // 電腦的選擇
+        private Choice playerChoice;        // 玩家的選擇
+        private int computerWins = 0;       // 電腦勝場數
+        private int playerWins = 0;         // 玩家勝場數
+        private Random random = new Random(); // 隨機數生成器
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        // 表單載入事件：初始化表單
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // 清空結果顯示標籤
+            resultLabel.Text = "";
+            // 設定初始圖片為空或預設圖片
+            playerPictureBox.Image = null;
+            computerPictureBox.Image = null;
+        }
+
+        // 石頭按鈕的點擊事件處理程序
+        private void stoneButton_Click(object sender, EventArgs e)
+        {
+            // 設定玩家選擇為石頭
+            playerChoice = Choice.Stone;
+            // 顯示玩家的圖片
+            showPlayerImage();
+            // 取得電腦的隨機選擇
+            getCompChoice();
+            // 顯示電腦的圖片
+            showComputerImage();
+            // 判斷勝負並顯示結果
+            showWinner();
+        }
+
+        // 布按鈕的點擊事件處理程序
+        private void paperButton_Click(object sender, EventArgs e)
+        {
+            // 設定玩家選擇為布
+            playerChoice = Choice.Paper;
+            // 顯示玩家的圖片
+            showPlayerImage();
+            // 取得電腦的隨機選擇
+            getCompChoice();
+            // 顯示電腦的圖片
+            showComputerImage();
+            // 判斷勝負並顯示結果
+            showWinner();
+        }
+
+        // 剪刀按鈕的點擊事件處理程序
+        private void scissorButton_Click(object sender, EventArgs e)
+        {
+            // 設定玩家選擇為剪刀
+            playerChoice = Choice.Scissor;
+            // 顯示玩家的圖片
+            showPlayerImage();
+            // 取得電腦的隨機選擇
+            getCompChoice();
+            // 顯示電腦的圖片
+            showComputerImage();
+            // 判斷勝負並顯示結果
+            showWinner();
+        }
+
+        // 結束遊戲按鈕的點擊事件處理程序
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // 建立遊戲統計結果的訊息
+            string message = $"遊戲統計結果：\n\n玩家勝場數：{playerWins}\n電腦勝場數：{computerWins}";
+            
+            // 判斷最終的勝負結果
+            if (playerWins > computerWins)
+            {
+                // 玩家勝利
+                message += "\n\n玩家贏得比賽！";
+            }
+            else if (computerWins > playerWins)
+            {
+                // 電腦勝利
+                message += "\n\n電腦贏得比賽！";
+            }
+            else
+            {
+                // 雙方平局
+                message += "\n\n雙方平局！";
+            }
+
+            // 顯示統計結果的訊息方塊
+            MessageBox.Show(message, "遊戲結束");
+            // 關閉窗體
+            this.Close();
+        }
+
+        // 產生電腦的隨機選擇
+        private void getCompChoice()
+        {
+            // 使用隨機數生成0到2之間的數字，轉換為 Choice 枚舉
+            computerChoice = (Choice)random.Next(0, 3);
+        }
+
+        // 根據玩家的選擇顯示對應的圖片
+        private void showPlayerImage()
+        {
+            switch (playerChoice)
+            {
+                case Choice.Stone:
+                    // 玩家選擇石頭，顯示石頭圖片
+                    playerPictureBox.Image = Properties.Resources.stone_player;
+                    break;
+                case Choice.Paper:
+                    // 玩家選擇布，顯示布圖片
+                    playerPictureBox.Image = Properties.Resources.paper_player;
+                    break;
+                case Choice.Scissor:
+                    // 玩家選擇剪刀，顯示剪刀圖片
+                    playerPictureBox.Image = Properties.Resources.scissor_player;
+                    break;
+            }
+        }
+
+        // 根據電腦的選擇顯示對應的圖片
+        private void showComputerImage()
+        {
+            switch (computerChoice)
+            {
+                case Choice.Stone:
+                    // 電腦選擇石頭，顯示石頭圖片
+                    computerPictureBox.Image = Properties.Resources.stone_computer;
+                    break;
+                case Choice.Paper:
+                    // 電腦選擇布，顯示布圖片
+                    computerPictureBox.Image = Properties.Resources.paper_computer;
+                    break;
+                case Choice.Scissor:
+                    // 電腦選擇剪刀，顯示剪刀圖片
+                    computerPictureBox.Image = Properties.Resources.scissor_computer;
+                    break;
+            }
+        }
+
+        // 比較玩家和電腦的選擇，判斷輸贏，更新勝場計數，並顯示結果
+        private void showWinner()
+        {
+            // 如果玩家和電腦選擇相同，為平手
+            if (playerChoice == computerChoice)
+            {
+                resultLabel.Text = "平手";
+                return;
+            }
+
+            // 判斷玩家是否獲勝：石頭勝剪刀、布勝石頭、剪刀勝布
+            if ((playerChoice == Choice.Stone && computerChoice == Choice.Scissor) ||
+                (playerChoice == Choice.Paper && computerChoice == Choice.Stone) ||
+                (playerChoice == Choice.Scissor && computerChoice == Choice.Paper))
+            {
+                // 玩家獲勝，增加玩家勝場數
+                playerWins++;
+                // 顯示玩家獲勝的訊息和目前的勝場數統計
+                resultLabel.Text = $"玩家勝！\n玩家勝場數：{playerWins}  電腦勝場數：{computerWins}";
+            }
+            else
+            {
+                // 電腦獲勝，增加電腦勝場數
+                computerWins++;
+                // 顯示電腦獲勝的訊息和目前的勝場數統計
+                resultLabel.Text = $"電腦勝！\n玩家勝場數：{playerWins}  電腦勝場數：{computerWins}";
+            }
+        }
+    }
+}

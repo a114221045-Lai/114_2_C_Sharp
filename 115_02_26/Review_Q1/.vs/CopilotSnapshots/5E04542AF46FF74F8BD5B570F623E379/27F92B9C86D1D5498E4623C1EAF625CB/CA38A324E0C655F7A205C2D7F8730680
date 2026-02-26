@@ -1,0 +1,168 @@
+﻿namespace Review_Q1
+{
+    // Form1 类：石头布剪刀游戏的主窗体
+    public partial class Form1 : Form
+    {
+        // 记录电脑的胜场数
+        private int computerWins = 0;
+        // 记录玩家的胜场数
+        private int playerWins = 0;
+        // 用于生成电脑随机选择的随机数生成器
+        private Random random = new Random();
+
+        // 定义游戏中的三种选择：石头、布、剪刀
+        private enum Choice
+        {
+            Stone = 0,      // 石头
+            Paper = 1,      // 布
+            Scissor = 2     // 剪刀
+        }
+
+        // Form1 构造函数，初始化窗体和事件处理程序
+        public Form1()
+        {
+            InitializeComponent();
+            // 将三个游戏选择按钮的 Click 事件与对应的事件处理程序关联
+            stoneButton.Click += StoneButton_Click;
+            paperButton.Click += PaperButton_Click;
+            scissorButton.Click += ScissorButton_Click;
+            // 将结束游戏按钮的 Click 事件与事件处理程序关联
+            exitButton.Click += ExitButton_Click;
+        }
+
+        // 石头按钮的点击事件处理程序
+        private void StoneButton_Click(object sender, EventArgs e)
+        {
+            // 调用游戏逻辑，传入玩家选择的"石头"
+            PlayGame(Choice.Stone);
+        }
+
+        // 布按钮的点击事件处理程序
+        private void PaperButton_Click(object sender, EventArgs e)
+        {
+            // 调用游戏逻辑，传入玩家选择的"布"
+            PlayGame(Choice.Paper);
+        }
+
+        // 剪刀按钮的点击事件处理程序
+        private void ScissorButton_Click(object sender, EventArgs e)
+        {
+            // 调用游戏逻辑，传入玩家选择的"剪刀"
+            PlayGame(Choice.Scissor);
+        }
+
+        // 游戏主逻辑：处理一局游戏
+        private void PlayGame(Choice playerChoice)
+        {
+            // 电脑随机生成0到2之间的数字，转换为 Choice 枚举
+            Choice computerChoice = (Choice)random.Next(0, 3);
+
+            // 根据玩家的选择更新玩家的图片
+            UpdatePlayerImage(playerChoice);
+            // 根据电脑的选择更新电脑的图片
+            UpdateComputerImage(computerChoice);
+
+            // 判断胜负并获取结果字符串
+            string result = DetermineWinner(playerChoice, computerChoice);
+            // 将结果显示在结果标签上
+            resultLabel.Text = result;
+        }
+
+        // 根据玩家选择更新玩家图片的方法
+        private void UpdatePlayerImage(Choice choice)
+        {
+            switch (choice)
+            {
+                case Choice.Stone:
+                    // 如果选择石头，显示石头的图片
+                    playerPictureBox.Image = Properties.Resources.stone_player;
+                    break;
+                case Choice.Paper:
+                    // 如果选择布，显示布的图片
+                    playerPictureBox.Image = Properties.Resources.paper_player;
+                    break;
+                case Choice.Scissor:
+                    // 如果选择剪刀，显示剪刀的图片
+                    playerPictureBox.Image = Properties.Resources.scissor_player;
+                    break;
+            }
+        }
+
+        // 根据电脑选择更新电脑图片的方法
+        private void UpdateComputerImage(Choice choice)
+        {
+            switch (choice)
+            {
+                case Choice.Stone:
+                    // 如果电脑选择石头，显示石头的图片
+                    computerPictureBox.Image = Properties.Resources.stone_computer;
+                    break;
+                case Choice.Paper:
+                    // 如果电脑选择布，显示布的图片
+                    computerPictureBox.Image = Properties.Resources.paper_computer;
+                    break;
+                case Choice.Scissor:
+                    // 如果电脑选择剪刀，显示剪刀的图片
+                    computerPictureBox.Image = Properties.Resources.scissor_computer;
+                    break;
+            }
+        }
+
+        // 判断胜负的方法，返回游戏结果字符串
+        private string DetermineWinner(Choice playerChoice, Choice computerChoice)
+        {
+            // 如果玩家和电脑选择相同，则为平手
+            if (playerChoice == computerChoice)
+            {
+                return "平手";
+            }
+
+            // 判断玩家是否获胜：石头胜剪刀、布胜石头、剪刀胜布
+            if ((playerChoice == Choice.Stone && computerChoice == Choice.Scissor) ||
+                (playerChoice == Choice.Paper && computerChoice == Choice.Stone) ||
+                (playerChoice == Choice.Scissor && computerChoice == Choice.Paper))
+            {
+                // 玩家获胜，增加玩家胜场数
+                playerWins++;
+                // 返回玩家获胜的消息和当前胜场数统计
+                return $"玩家勝！\n玩家勝場數：{playerWins}  電腦勝場數：{computerWins}";
+            }
+            else
+            {
+                // 电脑获胜，增加电脑胜场数
+                computerWins++;
+                // 返回电脑获胜的消息和当前胜场数统计
+                return $"電腦勝！\n玩家勝場數：{playerWins}  電腦勝場數：{computerWins}";
+            }
+        }
+
+        // 结束游戏按钮的点击事件处理程序
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            // 创建游戏结束时的统计消息，显示双方的胜场数
+            string message = $"遊戲統計結果：\n\n玩家勝場數：{playerWins}\n電腦勝場數：{computerWins}";
+            
+            // 判断谁获胜了最终比赛
+            if (playerWins > computerWins)
+            {
+                // 如果玩家的胜场数更多，表示玩家赢得比赛
+                message += $"\n\n玩家贏得比賽！";
+            }
+            else if (computerWins > playerWins)
+            {
+                // 如果电脑的胜场数更多，表示电脑赢得比赛
+                message += $"\n\n電腦贏得比賽！";
+            }
+            else
+            {
+                // 如果胜场数相同，表示双方平局
+                message += $"\n\n雙方平局！";
+            }
+
+            // 显示统计结果的弹出窗口
+            MessageBox.Show(message, "遊戲結束");
+            // 关闭窗体，结束程序
+            this.Close();
+        }
+    }
+}
