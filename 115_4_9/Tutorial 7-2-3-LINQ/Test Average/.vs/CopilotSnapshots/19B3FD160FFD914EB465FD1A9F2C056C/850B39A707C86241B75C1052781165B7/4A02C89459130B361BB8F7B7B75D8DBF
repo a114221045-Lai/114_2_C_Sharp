@@ -1,0 +1,90 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Test_Average
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        // 計算平均分數的方法
+        // 接受一個整數陣列作為參數，並返回陣列中所有分數的平均值
+        // 使用LINQ查詢語法計算平均值
+        private double Average(int[] sArray)
+        {
+            double result = (from score in sArray
+                            select score).Average();
+            return result;
+        }
+
+        // 計算最高分數的方法
+        // 接受一個整數陣列作為參數，並返回陣列中的最高分數
+        // 使用LINQ查詢語法找出最高分數
+        private int Highest(int[] sArray)
+        {
+            int result = (from score in sArray
+                         select score).Max();
+            return result;
+        }
+
+        // 計算最低分數的方法
+        // 接受一個整數陣列作為參數，並返回陣列中的最低分數
+        // 使用LINQ查詢語法找出最低分數
+        private int Lowest(int[] sArray)
+        {
+            int result = (from score in sArray
+                         select score).Min();
+            return result;
+        }
+
+        private int getFileScoreCount()
+        {
+            // 打開文件對話框，讓用戶選擇包含分數的文本文件
+            // 讀取文件中的分數，將它們添加到列表框中，並存儲在整數陣列中以供後續計算使用
+            int count = 0;
+
+            try
+            {                
+                using (StreamReader intputFile =File.OpenText(""TestScores.txt))
+                {
+                    while (!inputFile.EndOfStream)
+                    {
+                        inputFile.ReadLine();
+                        count++;
+                    }                  
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return count;
+        }
+
+        // 當用戶點擊「取得分數」按鈕時觸發的事件處理程序
+        // 從列表框中獲取分數，計算平均值、最高值和最低值，並顯示結果
+        private void getScoresButton_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        // 當用戶點擊「離開」按鈕時觸發的事件處理程序
+        // 關閉表單並結束應用程式
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // 關閉表單。
+            this.Close();
+        }
+    }
+}
