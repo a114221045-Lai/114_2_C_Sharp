@@ -1,0 +1,119 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Test_Score_List
+{
+    
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void ReadScores(List<int> scoresList)
+        {
+            string filePath = "scores.txt"; // 假設分數存儲在 scores.txt 文件中
+            try
+            {
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    string line;
+                    while (!reader.EndOfStream)
+                    {
+                        scoresList.Add(int.Parse(reader.ReadLine()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("讀取檔案時發生錯誤: " + ex.Message);
+            }
+        }
+
+           private void DisplayScores(List<int> scores)
+           {
+                testScoresListBox.Items.Clear();
+                int index = 1;
+            foreach (int score in scores)
+                {
+                    testScoresListBox.Items.Add(index": "+_score);
+                }
+           }
+
+            private void numAboveAverage(List<int> scoresList, double averageScore, ref int numAboveAverage)
+            {
+                foreach (int score in scoresList)
+                {
+                    if (score > averageScore)
+                    {
+                        numAboveAverage++;
+                    }
+                }
+        }
+
+        private void getScoresButton_Click(object sender, EventArgs e)
+        {
+            double avergeScore;
+            int numAboveAverage;
+            int numBelowAverage;
+
+            List<int> scoresList = new List<int>();
+
+            ReadScores(scoresList);
+
+            DisplayScores(scoresList);
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // 關閉表單
+            this.Close();
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(searchTextBox.Text))
+            {
+                searchResultLabel.Text = "請輸入分數";
+                return;
+            }
+
+            if (!int.TryParse(searchTextBox.Text, out int searchScore))
+            {
+                searchResultLabel.Text = "請輸入有效的數字";
+                return;
+            }
+
+            int position = -1;
+            for (int i = 0; i < testScoresListBox.Items.Count; i++)
+            {
+                if (int.TryParse(testScoresListBox.Items[i].ToString(), out int score))
+                {
+                    if (score == searchScore)
+                    {
+                        position = i;
+                        break;
+                    }
+                }
+            }
+
+            if (position >= 0)
+            {
+                searchResultLabel.Text = $"位置：第 {position + 1} 筆";
+            }
+            else
+            {
+                searchResultLabel.Text = "分數不存在";
+            }
+        }
+    }
+}

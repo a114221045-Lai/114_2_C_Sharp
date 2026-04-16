@@ -1,0 +1,109 @@
+﻿namespace Telephone_Format
+{
+    partial class Form1
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.numberTextBox = new System.Windows.Forms.TextBox();
+            this.instructionLabel = new System.Windows.Forms.Label();
+            this.formatButton = new System.Windows.Forms.Button();
+            this.exitButton = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // 注意：下面以繁體中文加入詳細註解，說明每個控制項的用途、字型設定與位置調整
+            // 
+            // numberTextBox
+            // 此為用戶輸入電話數字的文字方塊。
+            // 我們將字型改為常見的繁體中文字型並設定為 18pt，以利顯示與輸入較大的數字。
+            this.numberTextBox.Font = new System.Drawing.Font("Microsoft JhengHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.numberTextBox.Location = new System.Drawing.Point(110, 80);
+            this.numberTextBox.Name = "numberTextBox";
+            // 將寬度加大以容納字型與顯示更多文字，並增高以符合字型高度
+            this.numberTextBox.Size = new System.Drawing.Size(200, 39);
+            this.numberTextBox.TabIndex = 0;
+            // 
+            // instructionLabel
+            // 顯示使用說明的標籤。文字已改為繁體中文，並置中對齊。
+            this.instructionLabel.Font = new System.Drawing.Font("Microsoft JhengHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.instructionLabel.Location = new System.Drawing.Point(12, 12);
+            this.instructionLabel.Name = "instructionLabel";
+            // 增加高度與寬度，以容納換行且保持可讀性
+            this.instructionLabel.Size = new System.Drawing.Size(396, 56);
+            this.instructionLabel.TabIndex = 1;
+            this.instructionLabel.Text = "請輸入10位數字，我會將其格式化為電話號碼。";
+            this.instructionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // formatButton
+            // 按鈕會觸發格式化的邏輯，文字改為「格式化」。
+            this.formatButton.Font = new System.Drawing.Font("Microsoft JhengHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.formatButton.Location = new System.Drawing.Point(70, 140);
+            this.formatButton.Name = "formatButton";
+            // 增加按鈕大小以符合字型與可點擊區域
+            this.formatButton.Size = new System.Drawing.Size(120, 44);
+            this.formatButton.TabIndex = 2;
+            this.formatButton.Text = "格式化";
+            this.formatButton.UseVisualStyleBackColor = true;
+            this.formatButton.Click += new System.EventHandler(this.formatButton_Click);
+            // 
+            // exitButton
+            // 按鈕用於關閉視窗，文字改為「離開」。
+            this.exitButton.Font = new System.Drawing.Font("Microsoft JhengHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.exitButton.Location = new System.Drawing.Point(220, 140);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(120, 44);
+            this.exitButton.TabIndex = 3;
+            this.exitButton.Text = "離開";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
+            // Form1
+            // 設定主要表單的字型與標題（繁體中文），並調整表單大小以容納所有控制項。
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            // 將表單客戶區大小調整為較大的尺寸以容納 18pt 字型與較大元件
+            this.ClientSize = new System.Drawing.Size(420, 210);
+            this.Controls.Add(this.exitButton);
+            this.Controls.Add(this.formatButton);
+            this.Controls.Add(this.instructionLabel);
+            this.Controls.Add(this.numberTextBox);
+            this.Font = new System.Drawing.Font("Microsoft JhengHei", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Name = "Form1";
+            this.Text = "電話格式化";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.TextBox numberTextBox;
+        private System.Windows.Forms.Label instructionLabel;
+        private System.Windows.Forms.Button formatButton;
+        private System.Windows.Forms.Button exitButton;
+    }
+}
+

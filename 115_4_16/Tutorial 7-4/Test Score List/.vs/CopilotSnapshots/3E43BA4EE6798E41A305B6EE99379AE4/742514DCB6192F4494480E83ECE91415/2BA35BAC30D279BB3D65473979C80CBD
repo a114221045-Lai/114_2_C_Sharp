@@ -1,0 +1,175 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Test_Score_List
+{
+    /// <summary>
+    /// Form1 - 測試分數清單管理應用程式
+    /// 功能：讀取分數文件、顯示分數、計算統計資訊、搜尋分數
+    /// </summary>
+    public partial class Form1 : Form
+    {
+        /// <summary>
+        /// 建構函式 - 初始化表單
+        /// </summary>
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// 從檔案讀取分數數值
+        /// </summary>
+        /// <param name="scoresList">存儲分數的清單</param>
+        private void ReadScores(List<int> scoresList)
+        {
+            // 指定分數檔案路徑
+            string filePath = "scores.txt"; // 假設分數存儲在 scores.txt 文件中
+            try
+            {
+                // 使用 StreamReader 逐行讀取檔案內容
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    string line;
+                    // 當未到達檔案結尾時，持續讀取
+                    while (!reader.EndOfStream)
+                    {
+                        // 解析每一行為整數並加入清單
+                        scoresList.Add(int.Parse(reader.ReadLine()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // 若讀取檔案發生錯誤，顯示錯誤訊息
+                MessageBox.Show("讀取檔案時發生錯誤: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 將分數顯示到 ListBox 控件
+        /// </summary>
+        /// <param name="scores">包含分數的清單</param>
+        private void DisplayScores(List<int> scores)
+        {
+            // 清除 ListBox 中現有的項目
+            testScoresListBox.Items.Clear();
+            // 逐個將分數加入 ListBox
+            foreach (int score in scores)
+            {
+                testScoresListBox.Items.Add(score);
+            }
+        }
+
+        /// <summary>
+        /// 計算高於平均分數的筆數
+        /// </summary>
+        /// <param name="scoresList">分數清單</param>
+        /// <param name="averageScore">平均分數</param>
+        /// <param name="numAboveAverage">高於平均分數的筆數（引用參數）</param>
+        private void numAboveAverage(List<int> scoresList, double averageScore, ref int numAboveAverage)
+        {
+            // 遍歷所有分數
+            foreach (int score in scoresList)
+            {
+                // 如果分數大於平均分數，計數器加 1
+                if (score > averageScore)
+                {
+                    numAboveAverage++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 「取得分數」按鈕的點擊事件處理程式
+        /// 讀取分數檔案、顯示分數並計算統計資訊
+        /// </summary>
+        private void getScoresButton_Click(object sender, EventArgs e)
+        {
+            // 宣告變數存儲平均分數
+            double avergeScore;
+            // 宣告變數存儲高於平均分數的筆數
+            int numAboveAverage;
+            // 宣告變數存儲低於平均分數的筆數
+            int numBelowAverage;
+
+            // 建立分數清單
+            List<int> scoresList = new List<int>();
+
+            // 從檔案讀取分數
+            ReadScores(scoresList);
+
+            // 將分數顯示到 ListBox
+            DisplayScores(scoresList);
+        }
+
+        /// <summary>
+        /// 「結束」按鈕的點擊事件處理程式
+        /// 關閉應用程式
+        /// </summary>
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // 關閉表單視窗
+            this.Close();
+        }
+
+        /// <summary>
+        /// 「搜尋」按鈕的點擊事件處理程式
+        /// 在 ListBox 中搜尋輸入的分數並顯示結果
+        /// </summary>
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            // 檢查搜尋框是否為空
+            if (string.IsNullOrWhiteSpace(searchTextBox.Text))
+            {
+                searchResultLabel.Text = "請輸入分數";
+                return;
+            }
+
+            // 嘗試將輸入的文字轉換為整數
+            if (!int.TryParse(searchTextBox.Text, out int searchScore))
+            {
+                searchResultLabel.Text = "請輸入有效的數字";
+                return;
+            }
+
+            // 初始化位置變數為 -1（表示未找到）
+            int position = -1;
+            // 遍歷 ListBox 中的所有項目
+            for (int i = 0; i < testScoresListBox.Items.Count; i++)
+            {
+                // 嘗試將項目轉換為整數
+                if (int.TryParse(testScoresListBox.Items[i].ToString(), out int score))
+                {
+                    // 如果分數與搜尋分數相符
+                    if (score == searchScore)
+                    {
+                        // 記錄位置並結束搜尋迴圈
+                        position = i;
+                        break;
+                    }
+                }
+            }
+
+            // 檢查是否找到分數
+            if (position >= 0)
+            {
+                // 顯示分數所在的位置（位置從 1 開始）
+                searchResultLabel.Text = $"位置：第 {position + 1} 筆";
+            }
+            else
+            {
+                // 若未找到，顯示「分數不存在」
+                searchResultLabel.Text = "分數不存在";
+            }
+        }
+    }
+}

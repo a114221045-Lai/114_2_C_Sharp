@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Password_Validation
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        // NumberUpperCase 方法接受一個字串參數
+        // 並返回該字串中大寫字母的個數
+        private int NumberUpperCase(string str)
+        {
+            return 0;
+        }
+
+        // NumberLowerCase 方法接受一個字串參數
+        // 並返回該字串中小寫字母的個數
+        private int NumberLowerCase(string str)
+        {
+            return 0;
+        }
+
+        // NumberDigits 方法接受一個字串參數
+        // 並返回該字串中數字的個數
+        private int NumberDigits(string str)
+        {
+            return 0;
+        }
+
+        // 檢查密碼按鈕的點擊事件處理程序
+        // 此方法驗證使用者輸入的密碼是否符合所有要求
+        private void checkPasswordButton_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        // 離開按鈕的點擊事件處理程序
+        // 此方法關閉應用程式視窗
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // 關閉表單視窗
+            this.Close();
+        }
+    }
+}
