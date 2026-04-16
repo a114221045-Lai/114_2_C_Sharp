@@ -35,3 +35,14 @@ C:\Users\m303\Desktop\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Tel
 C:\Users\m303\Desktop\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.exe
 C:\Users\m303\Desktop\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.pdb
 C:\Users\m303\Desktop\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.exe.config
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\bin\Debug\Telephone Unformat.exe.config
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\bin\Debug\Telephone Unformat.exe
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\bin\Debug\Telephone Unformat.pdb
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.csproj.AssemblyReference.cache
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.exe.config
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone_Unformat.Form1.resources
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone_Unformat.Properties.Resources.resources
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.csproj.GenerateResource.cache
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.exe
+C:\Users\User\OneDrive\桌面\114_2_C_Sharp\115_4_16\Tutorial 8-3\Telephone Unformat\Telephone Unformat\obj\x86\Debug\Telephone Unformat.pdb

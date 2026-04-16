@@ -22,48 +22,17 @@ namespace Telephone_Unformat
         // 如果格式正確則傳回 true，否則傳回 false
         private bool IsValidFormat(string str)
         {
-            // 檢查字串長度是否為 13 個字元 格式為 (XX) XXXX-XXXX
-            if (str.Length != 13)
-                return false;
-
-            // 檢查第一個字元是否為 '('
-            if (str[0] != '(')
-                return false;
-
-            // 檢查第四個字元是否為 ')'
-            if (str[3] != ')')
-                return false;
-
-            // 檢查第五個字元是否為空格
-            if (str[4] != ' ')
-                return false;
-
-            // 檢查第十個字元是否為 '-'
-            if (str[9] != '-')
-                return false;
-
-            // 檢查括號內的兩個字元 (位置 1-2) 是否都是數字
-            for (int i = 1; i <= 2; i++)
+            // 檢查字串長度是否為 14 個字元
+            if (str.Length != 14)
             {
-                if (!char.IsDigit(str[i]))
-                    return false;
+                return false;
             }
 
-            // 檢查空格後到連字號前的四個字元 (位置 5-8) 是否都是數字
-            for (int i = 5; i <= 8; i++)
+            // 檢查字串的特定位置是否為括號和連字號
+            if (str[0] != '(' || str[3] != ')' || str[4] != ' ' || str[9] != '-')
             {
-                if (!char.IsDigit(str[i]))
-                    return false;
+                return false;
             }
-
-            // 檢查連字號後面的四個字元 (位置 10-12) 是否都是數字
-            for (int i = 10; i <= 12; i++)
-            {
-                if (!char.IsDigit(str[i]))
-                    return false;
-            }
-
-            // 若所有檢查都通過，傳回 true
             return true;
         }
 

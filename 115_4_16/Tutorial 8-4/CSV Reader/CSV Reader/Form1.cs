@@ -20,7 +20,7 @@ namespace CSV_Reader
 
         private void getScoresButton_Click(object sender, EventArgs e)
         {
-            
+            try
         }
 
         private void exitButton_Click(object sender, EventArgs e)
