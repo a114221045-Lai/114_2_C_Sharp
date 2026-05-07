@@ -1,0 +1,11 @@
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.csproj.AssemblyReference.cache
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.Form1.resources
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.Properties.Resources.resources
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.csproj.GenerateResource.cache
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.csproj.CoreCompileInputs.cache
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\bin\Debug\Quiz_0507.exe.config
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\bin\Debug\Quiz_0507.exe
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\bin\Debug\Quiz_0507.pdb
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.exe
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.pdb
+C:\Users\m303\Desktop\Quiz_0507\Quiz_0507\obj\Debug\Quiz_0507.exe.config
