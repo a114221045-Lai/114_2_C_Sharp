@@ -1,0 +1,182 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Account_Simulator
+{
+    public partial class Form1 : Form
+    {
+        private BankAccount account;
+
+        class BankAccount// 存儲帳戶餘額的私有欄位
+        {
+            private decimal balance;// 存儲帳戶持有者姓名的私有欄位
+            private string name;
+            private string accountNumber;
+
+            // 建構函式，接受帳戶持有者姓名、帳戶號碼和初始餘額參數
+            public BankAccount(string name, string accountNumber, decimal initialBalance)
+            {
+                this.name = name;// 使用 this 關鍵字區分成員變數和參數
+                this.accountNumber = accountNumber;
+                balance = initialBalance;// 初始化餘額
+            }
+
+            // 建構函式重載，僅接受初始餘額參數，預設帳戶持有者姓名和帳戶號碼
+            public BankAccount(decimal initialBalance)
+            {
+                balance = initialBalance;
+            }
+
+            public decimal Balance
+            {
+                get { return balance; }
+            }
+
+            public string Name
+            {
+                set { name = value; }
+                get { return name; }
+            }
+
+            public string AccountNumber
+            {
+                get { return accountNumber; }
+            }
+
+            // 存入方法：增加帳戶餘額
+            public void Deposit(decimal amount)
+            {
+                if (amount <= 0)
+                    return;
+                balance += amount;
+            }
+
+            // 提取方法：減少帳戶餘額（若餘額足夠）
+            public bool Withdraw(decimal amount)
+            {
+                if (amount > 0 && amount <= balance)
+                {
+                    balance -= amount;
+                    return true;
+                }
+                return false;
+            }
+            public decimal GetBalance()
+            {
+                return balance;
+            }
+        }
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // 初始化帳戶物件，預設餘額為 0
+            account = new BankAccount(0);
+
+            // 更新餘額標籤以顯示初始餘額
+            UpdateBalanceDisplay();
+        }
+
+        private void UpdateBalanceDisplay()
+        {
+            balanceLabel.Text = account.GetBalance().ToString("C");
+        }
+
+        private void depositButton_Click(object sender, EventArgs e)
+        {
+            // 嘗試解析使用者輸入的存入金額
+            if (decimal.TryParse(depositTextBox.Text, out decimal amount))
+            {
+                // 呼叫帳戶物件的存入方法，傳入金額
+                account.Deposit(amount);
+
+                // 更新餘額標籤以顯示新的餘額
+                UpdateBalanceDisplay();
+
+                // 清空存入金額文字方塊
+                depositTextBox.Clear();
+            }
+            else
+            {
+                // 若輸入無效，顯示錯誤訊息
+                MessageBox.Show("請輸入有效的金額");
+                depositTextBox.Clear();
+            }
+        }
+
+        private void withdrawButton_Click(object sender, EventArgs e)
+        {
+            // 嘗試解析使用者輸入的提取金額
+            if (decimal.TryParse(withdrawTextBox.Text, out decimal amount))
+            {
+                // 呼叫帳戶物件的提取方法，傳入金額，並檢查是否提取成功
+                if (account.Withdraw(amount))
+                {
+                    // 提取成功，更新餘額標籤以顯示新的餘額
+                    UpdateBalanceDisplay();
+
+                    // 清空提取金額文字方塊
+                    withdrawTextBox.Clear();
+                }
+                else
+                {
+                    // 提取金額不足，顯示錯誤訊息
+                    MessageBox.Show("提取金額不足！餘額不足以完成此筆交易。");
+                    withdrawTextBox.Clear();
+                }
+            }
+            else
+            {
+                // 若輸入無效，顯示錯誤訊息
+                MessageBox.Show("請輸入有效的金額");
+                withdrawTextBox.Clear();
+            }
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // 關閉表單
+            this.Close();
+        }
+
+        private void buttonl_Click(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(depositTextBox.Text, out decimal amount))
+            {
+                // 建立新的銀行帳戶物件，使用使用者輸入的帳戶號碼、姓名和初始餘額
+                string accountNumber = accountNumberTextBox.Text;
+                string name = nameTextBox.Text;
+                account = new BankAccount(accountNumber, name, amount);
+                balanceLabel.Text = accountNumber +"\n"
+                                    +name + "\n" 
+                                    + account.Balance.ToString("C");
+
+                // 清空輸入欄位
+                accountNumberTextBox.Clear();
+                nameTextBox.Clear();
+                balanceTextBox.Clear();
+
+                // 顯示存款跟提款項目
+                depositTextBox.Enabled = true;
+                withdrawTextBox.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("請輸入有效的金額", "輸入錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                depositTextBox.Clear();
+            }
+        }
+
+    }
+}
