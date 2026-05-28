@@ -1,0 +1,12 @@
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\bin\Debug\MutiFormVariable.exe.config
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\bin\Debug\MutiFormVariable.exe
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\bin\Debug\MutiFormVariable.pdb
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.csproj.AssemblyReference.cache
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.MainForm.resources
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.Properties.Resources.resources
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.SecondForm.resources
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.csproj.GenerateResource.cache
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.csproj.CoreCompileInputs.cache
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.exe
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.pdb
+C:\Users\m303\Desktop\114_2_C_Sharp\115_5_28\MutiFormVariable\MutiFormVariable\obj\Debug\MutiFormVariable.exe.config
