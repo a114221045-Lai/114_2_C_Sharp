@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Food_Facts
+{
+    /// <summary>
+    /// FoodItem 類：代表一個食物項目
+    /// 用於存儲食物的各種營養信息，包括名稱、熱量、脂肪和碳水化合物
+    /// </summary>
+    public class FoodItem
+    {
+        /// <summary>
+        /// 食物名稱
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 食物的熱量
+        /// </summary>
+        public string Calories { get; set; }
+
+        /// <summary>
+        /// 食物的脂肪克數
+        /// </summary>
+        public string Fat { get; set; }
+
+        /// <summary>
+        /// 食物的碳水化合物克數
+        /// </summary>
+        public string Carbs { get; set; }
+
+        /// <summary>
+        /// FoodItem 構造函數
+        /// 初始化一個新的食物項目實例
+        /// </summary>
+        /// <param name="name">食物名稱</param>
+        /// <param name="calories">熱量</param>
+        /// <param name="fat">脂肪克數</param>
+        /// <param name="carbs">碳水化合物克數</param>
+        public FoodItem(string name, string calories, string fat, string carbs)
+        {
+            Name = name;
+            Calories = calories;
+            Fat = fat;
+            Carbs = carbs;
+        }
+    }
+}
+
+

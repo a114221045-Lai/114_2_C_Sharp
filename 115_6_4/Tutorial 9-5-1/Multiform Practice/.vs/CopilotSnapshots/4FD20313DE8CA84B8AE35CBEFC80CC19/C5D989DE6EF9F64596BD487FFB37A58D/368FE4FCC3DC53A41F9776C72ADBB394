@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Multiform_Practice
+{
+    /// <summary>
+    /// 第二個表單類別 - 這是多表單應用程式中的次要視窗
+    /// 當使用者點擊主表單的"顯示表單"按鈕時會被建立並顯示
+    /// </summary>
+    public partial class SecondForm : Form
+    {
+        MainForm mainForm = new MainForm();
+        /// <summary>
+        /// 使用者名稱變數 - 用於儲存使用者的相關資訊
+        /// </summary>
+        private string uname;
+
+        /// <summary>
+        /// 第二個表單的建構函式 - 初始化表單的所有元件
+        /// </summary>
+        public SecondForm(ref string name)
+        {
+            InitializeComponent();
+            MainForm mainForm = new MainForm(); 
+            mainForm.Name = name;
+            uname = name;
+        }
+
+        public void SecondForm_Load(object sender, EventArgs e)
+        {
+            // 在表單載入時，將使用者名稱顯示在標籤上
+            nameLabel.Text = "Hello, " + uname;
+        }
+    }
+}
