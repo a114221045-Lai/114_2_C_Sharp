@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Final_Q2
+{
+    public partial class ModifyInformation : Form
+    {
+        private List<Employee> empList;
+        private Employee currentEmployee;
+
+        public ModifyInformation(List<Employee> list)
+        {
+            InitializeComponent();
+            empList = list;
+            currentEmployee = null;
+        }
+
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+            // Validate ID format
+            if (!int.TryParse(txtEmployeeID.Text, out int id))
+            {
+                MessageBox.Show("員工編號格式錯誤");
+                return;
+            }
+
+            // Find employee
+            currentEmployee = empList.FirstOrDefault(emp => emp.IdNumber == id);
+            if (currentEmployee == null)
+            {
+                MessageBox.Show("找不到員工");
+                txtName.Text = "";
+                txtDepartment.Text = "";
+                txtPosition.Text = "";
+                return;
+            }
+
+            // Populate fields
+            txtName.Text = currentEmployee.Name;
+            txtDepartment.Text = currentEmployee.Department;
+            txtPosition.Text = currentEmployee.Position;
+
+            richTextBoxInfo.Text = $"查詢結果:\r\n員工編號: {currentEmployee.IdNumber}\r\n姓名: {currentEmployee.Name}\r\n部門: {currentEmployee.Department}\r\n職稱: {currentEmployee.Position}";
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (currentEmployee == null)
+            {
+                MessageBox.Show("請先查詢員工");
+                return;
+            }
+
+            // Validate fields
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("姓名不可留空");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtDepartment.Text))
+            {
+                MessageBox.Show("部門不可留空");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtPosition.Text))
+            {
+                MessageBox.Show("職稱不可留空");
+                return;
+            }
+
+            // Update employee
+            currentEmployee.Name = txtName.Text.Trim();
+            currentEmployee.Department = txtDepartment.Text.Trim();
+            currentEmployee.Position = txtPosition.Text.Trim();
+
+            richTextBoxInfo.Text = $"員工資料已更新:\r\n員工編號: {currentEmployee.IdNumber}\r\n姓名: {currentEmployee.Name}\r\n部門: {currentEmployee.Department}\r\n職稱: {currentEmployee.Position}";
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+    }
+}

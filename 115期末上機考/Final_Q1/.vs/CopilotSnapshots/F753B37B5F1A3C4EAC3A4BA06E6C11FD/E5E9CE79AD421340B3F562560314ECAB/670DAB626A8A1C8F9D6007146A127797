@@ -1,0 +1,160 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Final_Q1
+{
+    public partial class MorseCodeConverterForm : Form
+    {
+        private Dictionary<char, string> morseCodeTable = new Dictionary<char, string>();
+
+        public MorseCodeConverterForm()
+        {
+            InitializeComponent();
+            LoadMorseCodeTable();
+        }
+
+        private void LoadMorseCodeTable()
+        {
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "morse_code_table.md");
+            
+            try
+            {
+                using (StreamReader inputFile = File.OpenText(filePath))
+                {
+                    int lineCount = 0;
+                    while (!inputFile.EndOfStream)
+                    {
+                        string line = inputFile.ReadLine();
+                        lineCount++;
+
+                        // Skip header lines (first two lines)
+                        if (lineCount <= 2)
+                            continue;
+
+                        // Parse data lines
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+
+                        string[] parts = line.Split('|');
+                        
+                        // Process pairs of (character, code) from the line
+                        for (int i = 1; i < parts.Length - 1; i += 2)
+                        {
+                            if (i + 1 < parts.Length - 1)
+                            {
+                                string charField = parts[i].Trim();
+                                string codeField = parts[i + 1].Trim();
+
+                                if (string.IsNullOrWhiteSpace(charField) || string.IsNullOrWhiteSpace(codeField))
+                                    continue;
+
+                                char key;
+                                string code = codeField.Trim('`');
+
+                                // Special character handling
+                                if (charField == "space")
+                                {
+                                    key = ' ';
+                                    code = "/";
+                                }
+                                else if (charField == "comma")
+                                {
+                                    key = ',';
+                                }
+                                else if (charField == "period")
+                                {
+                                    key = '.';
+                                }
+                                else if (charField.Length == 1)
+                                {
+                                    key = char.ToUpper(charField[0]);
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+
+                                if (!morseCodeTable.ContainsKey(key))
+                                {
+                                    morseCodeTable[key] = code;
+                                }
+                            }
+                        }
+                    }
+                }
+                buttonConvert.Enabled = true;
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("找不到密碼表，請確認檔案路徑", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                buttonConvert.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"讀取密碼表時發生錯誤: {ex.Message}", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                buttonConvert.Enabled = false;
+            }
+        }
+
+        private void buttonConvert_Click(object sender, EventArgs e)
+        {
+            string input = textBoxInput.Text;
+
+            // Empty input check
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                MessageBox.Show("請輸入文字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Convert to uppercase
+            input = input.ToUpper();
+
+            // Initialize output structures
+            List<string> morseCodeList = new List<string>();
+            List<KeyValuePair<char, string>> mappingList = new List<KeyValuePair<char, string>>();
+
+            // Process each character
+            foreach (char c in input)
+            {
+                if (morseCodeTable.ContainsKey(c))
+                {
+                    string morseCode = morseCodeTable[c];
+                    morseCodeList.Add(morseCode);
+                    mappingList.Add(new KeyValuePair<char, string>(c, morseCode));
+                }
+                // Unsupported characters are ignored (skipped)
+            }
+
+            // Display complete morse code
+            string completeMorse = string.Join(" ", morseCodeList);
+            textBoxMorse.Text = completeMorse;
+
+            // Display character mapping
+            listBoxMapping.Items.Clear();
+            foreach (var pair in mappingList)
+            {
+                string displayText = $"{pair.Key}    {pair.Value}";
+                listBoxMapping.Items.Add(displayText);
+            }
+
+            buttonClear.Enabled = true;
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            buttonClear.Enabled = false;
+            textBoxInput.Clear();
+            textBoxMorse.Clear();
+            listBoxMapping.Items.Clear();
+        }
+    }
+}

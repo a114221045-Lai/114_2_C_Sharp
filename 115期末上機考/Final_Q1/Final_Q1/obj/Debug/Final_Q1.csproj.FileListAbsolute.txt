@@ -1,0 +1,12 @@
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.csproj.AssemblyReference.cache
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.MorseCodeConverterForm.resources
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.Properties.Resources.resources
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.csproj.GenerateResource.cache
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.csproj.CoreCompileInputs.cache
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\bin\Debug\Final_Q1.exe.config
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\bin\Debug\Final_Q1.exe
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\bin\Debug\Final_Q1.pdb
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.exe
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.pdb
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\obj\Debug\Final_Q1.exe.config
+C:\Users\m303\Desktop\115期末上機考\Final_Q1\Final_Q1\bin\Debug\morse_code_table.md

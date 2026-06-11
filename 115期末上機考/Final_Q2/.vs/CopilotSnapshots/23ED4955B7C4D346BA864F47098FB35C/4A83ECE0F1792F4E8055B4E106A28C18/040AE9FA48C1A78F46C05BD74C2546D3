@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Final_Q2
+{
+    public partial class Query : Form
+    {
+        private List<Employee> empList;
+
+        public Query(List<Employee> list)
+        {
+            InitializeComponent();
+            empList = list;
+        }
+
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+            // Validate ID format
+            if (!int.TryParse(txtEmployeeID.Text, out int id))
+            {
+                MessageBox.Show("員工編號格式錯誤");
+                richTextBoxInfo.Text = "";
+                return;
+            }
+
+            // Find employee
+            Employee target = empList.FirstOrDefault(emp => emp.IdNumber == id);
+            if (target == null)
+            {
+                MessageBox.Show("找不到員工");
+                richTextBoxInfo.Text = "";
+                return;
+            }
+
+            // Display employee information
+            richTextBoxInfo.Text = $"員工編號：{target.IdNumber}\r\n姓名：{target.Name}\r\n部門：{target.Department}\r\n職稱：{target.Position}";
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+}

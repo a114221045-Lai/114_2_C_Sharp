@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Final_Q1
+{
+    public partial class MorseCodeConverterForm : Form
+    {
+        public MorseCodeConverterForm()
+        {
+            InitializeComponent();
+        }
+
+        private void buttonConvert_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            buttonClear.Enabled = false;
+            textBoxInput.Clear();
+        }
+    }
+}

@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Final_Q2
+{
+    public partial class Delete : Form
+    {
+        private List<Employee> empList;
+
+        public Delete(List<Employee> list)
+        {
+            InitializeComponent();
+            empList = list;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // Validate ID format
+            if (!int.TryParse(txtEmployeeID.Text, out int id))
+            {
+                MessageBox.Show("員工編號格式錯誤");
+                return;
+            }
+
+            // Find employee
+            Employee target = empList.FirstOrDefault(e => e.IdNumber == id);
+            if (target == null)
+            {
+                MessageBox.Show("找不到員工");
+                return;
+            }
+
+            // Delete employee
+            empList.Remove(target);
+
+            richTextBoxInfo.Text = $"員工已刪除:\r\n員工編號: {target.IdNumber}\r\n姓名: {target.Name}\r\n部門: {target.Department}\r\n職稱: {target.Position}";
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+    }
+}

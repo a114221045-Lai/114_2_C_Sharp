@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Final_Q2
+{
+    public partial class EmployeeInformationManagementSystem : Form
+    {
+        public EmployeeInformationManagementSystem()
+        {
+            InitializeComponent();
+        }
+
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDeleteEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnModifyEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnQueryEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

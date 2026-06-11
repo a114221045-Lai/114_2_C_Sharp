@@ -1,0 +1,15 @@
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\bin\Debug\Final_Q2.exe.config
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\bin\Debug\Final_Q2.exe
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\bin\Debug\Final_Q2.pdb
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.csproj.AssemblyReference.cache
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.EmployeeInformationManagementSystem.resources
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.Properties.Resources.resources
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.csproj.GenerateResource.cache
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.csproj.CoreCompileInputs.cache
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.exe
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.pdb
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.exe.config
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.Addemployee.resources
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.Delete.resources
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.Query.resources
+C:\Users\m303\Desktop\115期末上機考\Final_Q2\Final_Q2\obj\Debug\Final_Q2.ModifyInformation.resources

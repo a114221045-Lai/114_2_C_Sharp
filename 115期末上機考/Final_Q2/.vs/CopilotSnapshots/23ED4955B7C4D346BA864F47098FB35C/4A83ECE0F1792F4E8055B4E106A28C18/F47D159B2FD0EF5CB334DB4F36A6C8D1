@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Final_Q2
+{
+    public partial class Addemployee : Form
+    {
+        private List<Employee> empList;
+
+        public Addemployee(List<Employee> list)
+        {
+            InitializeComponent();
+            empList = list;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            // Validate ID format
+            if (!int.TryParse(txtEmployeeID.Text, out int id))
+            {
+                MessageBox.Show("員工編號格式錯誤");
+                return;
+            }
+
+            // Check if ID already exists
+            if (empList.Any(e => e.IdNumber == id))
+            {
+                MessageBox.Show("該員工編號已存在");
+                return;
+            }
+
+            // Validate name
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("姓名不可留空");
+                return;
+            }
+
+            // Validate department
+            if (string.IsNullOrWhiteSpace(txtDepartment.Text))
+            {
+                MessageBox.Show("部門不可留空");
+                return;
+            }
+
+            // Validate position
+            if (string.IsNullOrWhiteSpace(txtPosition.Text))
+            {
+                MessageBox.Show("職稱不可留空");
+                return;
+            }
+
+            // Create new employee
+            Employee newEmp = new Employee(id, txtName.Text.Trim(), txtDepartment.Text.Trim(), txtPosition.Text.Trim());
+            empList.Add(newEmp);
+
+            richTextBoxInfo.Text = $"新員工已新增:\r\n員工編號: {id}\r\n姓名: {txtName.Text}\r\n部門: {txtDepartment.Text}\r\n職稱: {txtPosition.Text}";
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+    }
+}

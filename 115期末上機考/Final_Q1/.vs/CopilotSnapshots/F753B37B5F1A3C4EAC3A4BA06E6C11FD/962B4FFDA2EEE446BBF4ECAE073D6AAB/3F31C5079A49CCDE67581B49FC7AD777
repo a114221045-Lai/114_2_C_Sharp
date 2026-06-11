@@ -1,0 +1,278 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Final_Q1
+{
+    /// <summary>
+    /// 摩斯密碼資料結構
+    /// 用於記錄單一字元與其對應的摩斯密碼
+    /// </summary>
+    public struct MorseCodeEntry
+    {
+        /// <summary>
+        /// 字元欄位
+        /// 用來記錄英文字母、數字或特殊符號
+        /// </summary>
+        public char Character;
+
+        /// <summary>
+        /// 摩斯密碼欄位
+        /// 用來記錄對應的摩斯密碼（由點.和線-組成）
+        /// </summary>
+        public string Code;
+
+        /// <summary>
+        /// MorseCodeEntry建構子
+        /// </summary>
+        /// <param name="character">字元</param>
+        /// <param name="code">摩斯密碼</param>
+        public MorseCodeEntry(char character, string code)
+        {
+            Character = character;
+            Code = code;
+        }
+    }
+
+    /// <summary>
+    /// 摩斯密碼轉換器表單類別
+    /// 功能：將使用者輸入的文字轉換為摩斯密碼，並顯示逐字對照
+    /// </summary>
+    public partial class MorseCodeConverterForm : Form
+    {
+        /// <summary>
+        /// 摩斯密碼對照表
+        /// 使用List儲存字元與摩斯密碼的對應關係
+        /// 每個元素是一個KeyValuePair，包含字元(Key)和對應的摩斯密碼(Value)
+        /// </summary>
+        private List<KeyValuePair<char, string>> morseCodeTable = new List<KeyValuePair<char, string>>();
+
+        /// <summary>
+        /// 表單建構子
+        /// 初始化UI元件並載入摩斯密碼對照表
+        /// </summary>
+        public MorseCodeConverterForm()
+        {
+            InitializeComponent();
+            LoadMorseCodeTable();
+        }
+
+        /// <summary>
+        /// 載入摩斯密碼對照表
+        /// 從morse_code_table.md檔案中讀取密碼資料
+        /// 使用StreamReader按行讀取，跳過Markdown表頭
+        /// 特殊處理：space(空格)、comma(逗號)、period(句號)等特殊字元
+        /// </summary>
+        private void LoadMorseCodeTable()
+        {
+            // 構建morse_code_table.md檔案的完整路徑
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "morse_code_table.md");
+            
+            try
+            {
+                // 開啟檔案並使用StreamReader逐行讀取
+                using (StreamReader inputFile = File.OpenText(filePath))
+                {
+                    int lineCount = 0;
+                    // 迴圈讀取檔案直到檔案結束
+                    while (!inputFile.EndOfStream)
+                    {
+                        string line = inputFile.ReadLine();
+                        lineCount++;
+
+                        // 跳過Markdown表格的前兩行標頭
+                        if (lineCount <= 2)
+                            continue;
+
+                        // 跳過空行
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+
+                        // 以'|'符號分割每行的欄位
+                        string[] parts = line.Split('|');
+                        
+                        // 處理每行中的字元-密碼對
+                        // 從索引1開始，每次跳過2個欄位（字元和密碼）
+                        for (int i = 1; i < parts.Length - 1; i += 2)
+                        {
+                            // 確保有足夠的欄位用於配對
+                            if (i + 1 < parts.Length - 1)
+                            {
+                                // 取出字元欄位和密碼欄位，移除前後空白
+                                string charField = parts[i].Trim();
+                                string codeField = parts[i + 1].Trim();
+
+                                // 跳過空的欄位
+                                if (string.IsNullOrWhiteSpace(charField) || string.IsNullOrWhiteSpace(codeField))
+                                    continue;
+
+                                char key;
+                                // 移除密碼欄位中的反引號(`)符號
+                                string code = codeField.Trim('`');
+
+                                // 處理特殊字元
+                                if (charField == "space")
+                                {
+                                    // space對應空格字元，密碼為'/'
+                                    key = ' ';
+                                    code = "/";
+                                }
+                                else if (charField == "comma")
+                                {
+                                    // comma對應逗號字元
+                                    key = ',';
+                                }
+                                else if (charField == "period")
+                                {
+                                    // period對應句號字元
+                                    key = '.';
+                                }
+                                else if (charField.Length == 1)
+                                {
+                                    // 單一字元轉換為大寫
+                                    key = char.ToUpper(charField[0]);
+                                }
+                                else
+                                {
+                                    // 無法處理的欄位，跳過
+                                    continue;
+                                }
+
+                                // 避免重複的鍵值，先檢查該字元是否已存在於列表中
+                                bool keyExists = false;
+                                foreach (var item in morseCodeTable)
+                                {
+                                    if (item.Key == key)
+                                    {
+                                        keyExists = true;
+                                        break;
+                                    }
+                                }
+                                // 只在第一次遇到時加入列表
+                                if (!keyExists)
+                                {
+                                    morseCodeTable.Add(new KeyValuePair<char, string>(key, code));
+                                }
+                            }
+                        }
+                    }
+                }
+                // 密碼表載入成功，啟用轉換按鈕
+                buttonConvert.Enabled = true;
+            }
+            catch (FileNotFoundException)
+            {
+                // 檔案不存在時顯示錯誤訊息
+                MessageBox.Show("找不到密碼表，請確認檔案路徑", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                buttonConvert.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                // 其他例外情況的錯誤訊息
+                MessageBox.Show($"讀取密碼表時發生錯誤: {ex.Message}", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                buttonConvert.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// 轉換按鈕點擊事件處理器
+        /// 功能流程：
+        /// 1. 驗證輸入文字是否為空
+        /// 2. 將輸入文字轉換為大寫
+        /// 3. 逐字查詢摩斯密碼對照表
+        /// 4. 產生完整摩斯密碼字串和逐字對照列表
+        /// 5. 顯示轉換結果到UI
+        /// </summary>
+        private void buttonConvert_Click(object sender, EventArgs e)
+        {
+            // 取得使用者輸入的文字
+            string input = textBoxInput.Text;
+
+            // 檢查輸入是否為空或空白
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                MessageBox.Show("請輸入文字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // 將輸入文字統一轉換為大寫，確保與密碼表相符
+            input = input.ToUpper();
+
+            // 初始化儲存摩斯密碼的列表
+            List<string> morseCodeList = new List<string>();
+            // 初始化儲存字元對照關係的列表
+            List<KeyValuePair<char, string>> mappingList = new List<KeyValuePair<char, string>>();
+
+            // 逐一處理輸入字串中的每個字元
+            foreach (char c in input)
+            {
+                // 從列表中查詢該字元的摩斯密碼
+                string morseCode = null;
+                foreach (var item in morseCodeTable)
+                {
+                    if (item.Key == c)
+                    {
+                        morseCode = item.Value;
+                        break;
+                    }
+                }
+
+                // 如果找到對應的摩斯密碼
+                if (morseCode != null)
+                {
+                    // 加入摩斯密碼列表
+                    morseCodeList.Add(morseCode);
+                    // 加入字元-密碼對應關係列表
+                    mappingList.Add(new KeyValuePair<char, string>(c, morseCode));
+                }
+                // 不支援的字元會自動跳過（忽略處理）
+            }
+
+            // 使用空格連接所有摩斯密碼，產生完整密碼字串
+            string completeMorse = string.Join(" ", morseCodeList);
+            // 將完整摩斯密碼顯示在textBoxMorse中
+            textBoxMorse.Text = completeMorse;
+
+            // 清空舊的對照列表
+            listBoxMapping.Items.Clear();
+            // 逐一顯示每個字元及其對應的摩斯密碼
+            foreach (var pair in mappingList)
+            {
+                // 格式：字元 + 多個空格 + 密碼，便於對齊顯示
+                string displayText = $"{pair.Key}    {pair.Value}";
+                listBoxMapping.Items.Add(displayText);
+            }
+
+            // 轉換完成後啟用清除按鈕
+            buttonClear.Enabled = true;
+        }
+
+        /// <summary>
+        /// 清除按鈕點擊事件處理器
+        /// 功能：清空所有輸入和輸出欄位，重置表單
+        /// 步驟：
+        /// 1. 停用清除按鈕
+        /// 2. 清空輸入文字框
+        /// 3. 清空摩斯密碼輸出框
+        /// 4. 清空逐字對照列表
+        /// </summary>
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            // 停用清除按鈕（因為沒有內容可清除）
+            buttonClear.Enabled = false;
+            // 清空使用者輸入的文字
+            textBoxInput.Clear();
+            // 清空輸出的摩斯密碼
+            textBoxMorse.Clear();
+            // 清空逐字對照列表中的所有項目
+            listBoxMapping.Items.Clear();
+        }
+    }
+}

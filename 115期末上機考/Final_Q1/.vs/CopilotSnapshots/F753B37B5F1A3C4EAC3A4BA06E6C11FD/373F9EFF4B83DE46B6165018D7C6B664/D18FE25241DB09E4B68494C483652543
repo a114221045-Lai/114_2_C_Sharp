@@ -1,0 +1,195 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Final_Q1
+{
+    /// <summary>
+    /// 摩斯密碼資料結構
+    /// 用於記錄單一字元與其對應的摩斯密碼
+    /// </summary>
+    public struct MorseCodeEntry
+    {
+        /// <summary>
+        /// 字元欄位
+        /// 用來記錄英文字母、數字或特殊符號
+        /// </summary>
+        public char Character;
+
+        /// <summary>
+        /// 摩斯密碼欄位
+        /// 用來記錄對應的摩斯密碼（由點.和線-組成）
+        /// </summary>
+        public string Code;
+
+        /// <summary>
+        /// MorseCodeEntry建構子
+        /// </summary>
+        /// <param name="character">字元</param>
+        /// <param name="code">摩斯密碼</param>
+        public MorseCodeEntry(char character, string code)
+        {
+            Character = character;
+            Code = code;
+        }
+    }
+
+    /// <summary>
+    /// 摩斯密碼轉換器表單類別
+    /// 功能：將使用者輸入的文字轉換為摩斯密碼，並顯示逐字對照
+    /// </summary>
+    public partial class MorseCodeConverterForm : Form
+    {
+        /// <summary>
+        /// 摩斯密碼對照表
+        /// 使用List儲存MorseCodeEntry結構體，每個元素包含字元和對應的摩斯密碼
+        /// </summary>
+        private List<MorseCodeEntry> morseCodeTable = new List<MorseCodeEntry>();
+
+        /// <summary>
+        /// 表單建構子
+        /// 初始化UI元件並載入摩斯密碼對照表
+        /// </summary>
+        public MorseCodeConverterForm()
+        {
+            InitializeComponent();
+            LoadMorseCodeTable();
+        }
+
+        /// <summary>
+        /// 載入摩斯密碼對照表
+        /// 從morse_code_table.md檔案中讀取密碼資料
+        /// </summary>
+        private void LoadMorseCodeTable()
+        {
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "morse_code_table.md");
+            
+            try
+            {
+                using (StreamReader inputFile = File.OpenText(filePath))
+                {
+                    int lineCount = 0;
+                    while (!inputFile.EndOfStream)
+                    {
+                        string line = inputFile.ReadLine();
+                        lineCount++;
+
+                        if (lineCount <= 2 || string.IsNullOrWhiteSpace(line))
+                            continue;
+
+                        string[] parts = line.Split('|');
+                        
+                        for (int i = 1; i < parts.Length - 1; i += 2)
+                        {
+                            if (i + 1 >= parts.Length - 1)
+                                break;
+
+                            string charField = parts[i].Trim();
+                            string codeField = parts[i + 1].Trim();
+
+                            if (string.IsNullOrWhiteSpace(charField) || string.IsNullOrWhiteSpace(codeField))
+                                continue;
+
+                            char key;
+                            string code = codeField.Trim('`');
+
+                            if (charField == "space")
+                            {
+                                key = ' ';
+                                code = "/";
+                            }
+                            else if (charField == "comma")
+                                key = ',';
+                            else if (charField == "period")
+                                key = '.';
+                            else if (charField.Length == 1)
+                                key = char.ToUpper(charField[0]);
+                            else
+                                continue;
+
+                            if (!morseCodeTable.Any(item => item.Character == key))
+                                morseCodeTable.Add(new MorseCodeEntry(key, code));
+                        }
+                    }
+                }
+                buttonConvert.Enabled = true;
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("找不到密碼表，請確認檔案路徑", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                buttonConvert.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"讀取密碼表時發生錯誤: {ex.Message}", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                buttonConvert.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// 轉換按鈕點擊事件處理器
+        /// 將輸入文字轉換為摩斯密碼並顯示結果
+        /// </summary>
+        private void buttonConvert_Click(object sender, EventArgs e)
+        {
+            string input = textBoxInput.Text;
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                MessageBox.Show("請輸入文字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            input = input.ToUpper();
+
+            List<string> morseCodeList = new List<string>();
+            List<KeyValuePair<char, string>> mappingList = new List<KeyValuePair<char, string>>();
+
+            foreach (char c in input)
+            {
+                var entry = morseCodeTable.FirstOrDefault(item => item.Character == c);
+                if (entry.Code != null)
+                {
+                    morseCodeList.Add(entry.Code);
+                    mappingList.Add(new KeyValuePair<char, string>(c, entry.Code));
+                }
+            }
+
+            textBoxMorse.Text = string.Join(" ", morseCodeList);
+
+            listBoxMapping.Items.Clear();
+            foreach (var pair in mappingList)
+                listBoxMapping.Items.Add($"{pair.Key}    {pair.Value}");
+
+            buttonClear.Enabled = true;
+        }
+
+        /// <summary>
+        /// 清除按鈕點擊事件處理器
+        /// 功能：清空所有輸入和輸出欄位，重置表單
+        /// 步驟：
+        /// 1. 停用清除按鈕
+        /// 2. 清空輸入文字框
+        /// 3. 清空摩斯密碼輸出框
+        /// 4. 清空逐字對照列表
+        /// </summary>
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            // 停用清除按鈕（因為沒有內容可清除）
+            buttonClear.Enabled = false;
+            // 清空使用者輸入的文字
+            textBoxInput.Clear();
+            // 清空輸出的摩斯密碼
+            textBoxMorse.Clear();
+            // 清空逐字對照列表中的所有項目
+            listBoxMapping.Items.Clear();
+        }
+    }
+}
